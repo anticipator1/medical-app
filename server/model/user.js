@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
 	phoneNumber: { type: String, unique: [true, "That username is taken."] },
 	role: {
 		type: String,
-		enum: ["customer", "admin", "vendor"],
+		enum: ["customer", "admin"],
 		default: "customer",
 	},
 });

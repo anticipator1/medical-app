@@ -25,7 +25,7 @@ const SignupSchema = Yup.object().shape({
 export default function Register() {
 	const registerUser = async (values) => {
 		try {
-			const response = await fetch("http://localhost:3005/admin/register", {
+			const response = await fetch("http://localhost:3005/user/register", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -43,7 +43,7 @@ export default function Register() {
 		<div className="flex w-5/6  justify-center  m-auto mt-4">
 			<div className="flex flex-col w-full sm:w-3/4 md:w-3/4  lg:w-2/4 xl:w-96  justify-center ">
 				<h1 className="font-bold text-xl mt-4 w-full text-center md:text-2xl ">
-					Register admin account
+					Register client account
 				</h1>
 
 				<Formik
