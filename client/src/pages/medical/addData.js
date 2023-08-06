@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 const SignupSchema = Yup.object().shape({
 	fullName: Yup.string()
@@ -27,6 +28,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function addData() {
+	const router = useRouter();
+
 	const addUserData = async (values) => {
 		try {
 			const response = await fetch("http://localhost:3005/patient/addData", {
@@ -38,6 +41,9 @@ export default function addData() {
 			});
 			const result = await response.json();
 			console.log("Post response:", result);
+			if (result) {
+				router.push("/");
+			}
 		} catch (error) {
 			console.error("Error posting data:", error);
 		}

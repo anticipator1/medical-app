@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -15,7 +16,16 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-
+import Drawer from "@mui/material/Drawer";
+import AddIcon from "@mui/icons-material/Add";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import SettingsIcon from "@mui/icons-material/Settings";
+import ListItemButton from "@mui/material/ListItemButton";
+import HomeIcon from "@mui/icons-material/Home";
+import Link from "next/link";
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
 	borderRadius: theme.shape.borderRadius,
@@ -57,11 +67,16 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function PrimarySearchAppBar() {
-	const [anchorEl, setAnchorEl] = React.useState(null);
-	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+	const [anchorEl, setAnchorEl] = useState(null);
+	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
 	const isMenuOpen = Boolean(anchorEl);
 	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+	const [openDrawer, setOpenDrawer] = useState(false);
+
+	const toggleDrawer = () => {
+		setOpenDrawer(!openDrawer);
+	};
 
 	const handleProfileMenuOpen = (event) => {
 		setAnchorEl(event.currentTarget);
@@ -119,7 +134,7 @@ export default function PrimarySearchAppBar() {
 			open={isMobileMenuOpen}
 			onClose={handleMobileMenuClose}
 		>
-			<MenuItem>
+			{/* <MenuItem>
 				<IconButton size="large" aria-label="show 4 new mails" color="inherit">
 					<Badge badgeContent={4} color="error">
 						<MailIcon />
@@ -138,7 +153,7 @@ export default function PrimarySearchAppBar() {
 					</Badge>
 				</IconButton>
 				<p>Notifications</p>
-			</MenuItem>
+			</MenuItem> */}
 			<MenuItem onClick={handleProfileMenuOpen}>
 				<IconButton
 					size="large"
@@ -156,17 +171,41 @@ export default function PrimarySearchAppBar() {
 
 	return (
 		<Box sx={{ flexGrow: 1 }}>
-			<AppBar position="static">
+			<AppBar position="fixed">
 				<Toolbar>
 					<IconButton
 						size="large"
 						edge="start"
 						color="inherit"
 						aria-label="open drawer"
+						onClick={toggleDrawer}
 						sx={{ mr: 2 }}
 					>
 						<MenuIcon />
 					</IconButton>
+					<Drawer anchor="left" open={openDrawer} onClose={toggleDrawer}>
+						<List className=" w-34 md:p-4 md:w-48 ">
+							<ListItem>
+								<Link
+									href="/"
+									className="flex align-center justify-between  w-50"
+								>
+									<ListItemText primary="Home" className=" md:w-20 w-14" />
+									<ListItemIcon>
+										<HomeIcon />
+									</ListItemIcon>
+								</Link>
+							</ListItem>
+							<ListItem true>
+								<Link href="/admin/register" className="flex align-center">
+									<ListItemText primary="Setting" className="md:w-20 w-14" />
+									<ListItemIcon>
+										<SettingsIcon />
+									</ListItemIcon>
+								</Link>
+							</ListItem>
+						</List>
+					</Drawer>
 					<Typography
 						variant="h6"
 						noWrap
@@ -184,6 +223,13 @@ export default function PrimarySearchAppBar() {
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</Search>
+					<Link
+						href="/medical/addData"
+						className="flex bg-indigo-600 p-2 hover:bg-indigo-400"
+					>
+						<p>Create New</p>
+						<AddIcon />
+					</Link>
 					<Box sx={{ flexGrow: 1 }} />
 					<Box sx={{ display: { xs: "none", md: "flex" } }}>
 						{/* <IconButton
@@ -204,6 +250,7 @@ export default function PrimarySearchAppBar() {
 								<NotificationsIcon />
 							</Badge>
 						</IconButton> */}
+
 						<IconButton
 							size="large"
 							edge="end"

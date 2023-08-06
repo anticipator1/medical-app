@@ -37,13 +37,13 @@ export default function Dashboard() {
 		fetchPatients();
 	}, []);
 	return (
-		<div className="flex w-5/6 flex-col  justify-center  m-auto mt-4">
+		<div className="flex w-full flex-col  justify-center">
 			<Navbar />
-			<div className="w-full border-2 border-blue-300">
+			<div className="w-full border-2 border-blue-300 mt-14">
 				<div className="flex justify-between m-4 p-2 border-blue-100 border-2">
-					<h1 className="w-1/3">full name</h1>
-					<p className="w-1/3">sex</p>
-					<p className="w-1/3">age</p>
+					<h1 className="w-1/3 text-2xl font-serif font-bold">Full Name</h1>
+					<h1 className="w-1/3 text-2xl font-serif font-bold">Sex</h1>
+					<h1 className="w-1/3 text-2xl font-serif font-bold">Age</h1>
 				</div>
 				{patients.length > 0 ? (
 					patients.map((item) => (
