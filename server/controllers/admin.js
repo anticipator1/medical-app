@@ -1,5 +1,5 @@
 const User = require("../model/user");
-const registerUser = async (req, res) => {
+const registerAdmin = async (req, res) => {
 	try {
 		req.body.role = "admin";
 		const data = await User.create(req.body);
@@ -44,7 +44,7 @@ const registerUser = async (req, res) => {
 // };
 
 module.exports = {
-	registerUser,
+	registerAdmin,
 	// getAllUser,
 	// getUserById,
 	// deleteExistingUser,
