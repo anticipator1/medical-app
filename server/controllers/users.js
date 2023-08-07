@@ -1,12 +1,22 @@
 const User = require("../model/user");
+const bcrypt = require("bcrypt");
 const registerUser = async (req, res) => {
 	try {
 		req.body.role = "customer";
-		const data = await User.create(req.body);
-		res.json({
-			msg: "success",
-			data,
-		});
+		const matched = await User.exists({ phoneNumber: req.body.phoneNumber });
+		if (matched) {
+			res.status(409).json({
+				msg: "User already exist",
+			});
+		} else {
+			const hashedPassword = await bcrypt.hash(req.body.password, 10);
+			req.body.password = hashedPassword;
+			const data = await User.create(req.body);
+			res.json({
+				msg: "success",
+				data,
+			});
+		}
 	} catch (error) {
 		console.log(error);
 	}

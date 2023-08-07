@@ -41,19 +41,21 @@ export default function Dashboard() {
 			<Navbar />
 			<div className="w-full border-2 border-blue-300 mt-14">
 				<div className="flex justify-between m-4 p-2 border-blue-100 border-2">
-					<h1 className="w-1/3 text-2xl font-serif font-bold">Full Name</h1>
-					<h1 className="w-1/3 text-2xl font-serif font-bold">Sex</h1>
-					<h1 className="w-1/3 text-2xl font-serif font-bold">Age</h1>
+					<h1 className="w-1/6 text-xl font-serif font-bold">Test ID</h1>
+					<h1 className="w-1/4 text-xl font-serif font-bold">Full Name</h1>
+					<h1 className="w-1/4 text-xl font-serif font-bold">Sex</h1>
+					<h1 className="w-1/4 text-xl font-serif font-bold">Age</h1>
 				</div>
 				{patients.length > 0 ? (
 					patients.map((item) => (
 						<div
 							key={item._id}
-							className="flex flex-row justify-between m-4 p-2 border-blue-100 border-b-2"
+							className="flex flex-row justify-between m-4 p-2 border-blue-100 border-b-2 text-lg"
 						>
-							<p className="w-1/3">{item.fullName}</p>
-							<p className="w-1/3">{item.sex}</p>
-							<p className="w-1/3">{item.age}</p>
+							<p className="w-1/6">{item.userId}</p>
+							<p className="w-1/4">{item.fullName}</p>
+							<p className="w-1/4">{item.sex}</p>
+							<p className="w-1/4">{item.age}</p>
 						</div>
 					))
 				) : (

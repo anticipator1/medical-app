@@ -6,10 +6,10 @@ import { useRouter } from "next/navigation";
 const SignupSchema = Yup.object().shape({
 	fullName: Yup.string()
 		.min(4, "Too Short!")
-		.max(16, "Too Long!")
+		.max(25, "Too Long!")
 		.required("Required"),
 	phoneNumber: Yup.number()
-		.min(10, "Too Short!")
+		.min(8, "Too Short!")
 
 		.required("Required"),
 	age: Yup.number()
@@ -83,7 +83,7 @@ export default function addData() {
 								type="text"
 								className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
 							/>
-							{errors.fullNamer && touched.fullName ? (
+							{errors.fullName && touched.fullName ? (
 								<div className="text-red-500">{errors.fullName}</div>
 							) : null}
 							<label
