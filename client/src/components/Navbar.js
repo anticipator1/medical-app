@@ -66,7 +66,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({
+	searchInput,
+	onSearchInputChange,
+}) {
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -221,6 +224,8 @@ export default function PrimarySearchAppBar() {
 						<StyledInputBase
 							placeholder="Search…"
 							inputProps={{ "aria-label": "search" }}
+							value={searchInput}
+							onChange={(e) => onSearchInputChange(e.target.value)}
 						/>
 					</Search>
 					<Link
