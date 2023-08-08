@@ -19,9 +19,9 @@ export default function patientDetail() {
 	return (
 		<div className="flex w-full flex-col items-center">
 			<Navbar searchInput={searchInput} onSearchInputChange={setSearchInput} />
-			<div className="w-full max-w-md p-6 mx-auto mt-10 bg-white rounded-lg shadow-md">
+			<div className="w-full max-w-md p-6 mx-auto mt-14 bg-white rounded-lg shadow-md ">
 				<h1 className="text-2xl font-semibold text-center">User Details</h1>
-				<div className="mt-4 space-y-2">
+				<div className="mt-6 space-y-2">
 					<div className="flex justify-between">
 						<p className="text-gray-600 font-medium">User Id:</p>
 						<p>{data.userId}</p>

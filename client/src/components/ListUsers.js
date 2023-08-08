@@ -28,7 +28,7 @@ export default function ListUsers({ filteredPatients }) {
 						<p className="w-1/4">{item.sex}</p>
 						<p className="w-1/4">{item.age}</p>
 						<Link
-							href="/medical/detail"
+							href={`/medical/detail/${item._id}`}
 							className="text-indigo-600 underline w-24"
 						>
 							<p className="text-lg font-semibold">Details</p>

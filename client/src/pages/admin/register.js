@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 const SignupSchema = Yup.object().shape({
 	firstName: Yup.string()
@@ -16,6 +17,9 @@ const SignupSchema = Yup.object().shape({
 		.min(2, "Too Short!")
 		.max(50, "Too Long!")
 		.required("Required"),
+	confirmPassword: Yup.string()
+		.oneOf([Yup.ref("password"), null], "Passwords do not match")
+		.required("Required"),
 	phoneNumber: Yup.string()
 		.min(10, "Too Short!")
 		.max(15, "Too Long!")
@@ -23,6 +27,7 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function Register() {
+	const router = useRouter();
 	const registerUser = async (values) => {
 		try {
 			const response = await fetch("http://localhost:3005/admin/register", {
@@ -33,6 +38,9 @@ export default function Register() {
 				body: JSON.stringify(values),
 			});
 			const result = await response.json();
+			if (result) {
+				router.push("/admin/login");
+			}
 			console.log("Post response:", result);
 		} catch (error) {
 			console.error("Error posting data:", error);
@@ -53,6 +61,7 @@ export default function Register() {
 						phoneNumber: "",
 						email: "",
 						password: "",
+						confirmPassword: "",
 						role: "",
 					}}
 					validationSchema={SignupSchema}
@@ -135,6 +144,20 @@ export default function Register() {
 							/>
 							{errors.password && touched.password ? (
 								<div className="text-red-500">{errors.password}</div>
+							) : null}
+							<label
+								htmlFor="confirmPassword"
+								className="block text-sm font-medium leading-6 text-gray-900 mt-5"
+							>
+								Confirm Password
+							</label>
+							<Field
+								name="confirmPassword"
+								type="password"
+								className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 outline-none"
+							/>
+							{errors.confirmPassword && touched.confirmPassword ? (
+								<div className="text-red-500">{errors.confirmPassword}</div>
 							) : null}
 
 							<button

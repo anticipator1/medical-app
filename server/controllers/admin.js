@@ -1,5 +1,7 @@
 const User = require("../model/user");
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const registerAdmin = async (req, res) => {
 	try {
 		req.body.role = "admin";
@@ -19,6 +21,32 @@ const registerAdmin = async (req, res) => {
 		}
 	} catch (error) {
 		console.log(error);
+	}
+};
+
+const loginAdmin = async (req, res) => {
+	const user = await User.findOne({ phoneNumber: req.body.phoneNumber });
+
+	if (user) {
+		const isMatched = await bcrypt.compare(req.body.password, user.password);
+		if (isMatched) {
+			const secretKey = crypto.randomBytes(32).toString("hex");
+			const token = jwt.sign({ id: user._id }, secretKey);
+			res.json({
+				success: true,
+				token,
+			});
+		} else {
+			res.json({
+				success: false,
+				msg: "incorrect login credentials",
+			});
+		}
+	} else {
+		res.json({
+			success: false,
+			msg: "no user found",
+		});
 	}
 };
 
@@ -55,6 +83,7 @@ const registerAdmin = async (req, res) => {
 
 module.exports = {
 	registerAdmin,
+	loginAdmin,
 	// getAllUser,
 	// getUserById,
 	// deleteExistingUser,

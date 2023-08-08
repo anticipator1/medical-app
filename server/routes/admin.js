@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const { registerAdmin } = require("../controllers/admin");
+const { registerAdmin, loginAdmin } = require("../controllers/admin");
 
 router.post("/admin/register", registerAdmin);
+router.post("/admin/login", loginAdmin);
 
 // router.get("/users", getAllUser);
 

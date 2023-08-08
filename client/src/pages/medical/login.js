@@ -1,6 +1,7 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/navigation";
 
 const SignupSchema = Yup.object().shape({
 	phoneNumber: Yup.string()
@@ -24,7 +25,11 @@ export default function Login() {
 				body: JSON.stringify(values),
 			});
 			const result = await response.json();
+
 			console.log("Post response:", result);
+			if (result) {
+				Router.push("/");
+			}
 		} catch (error) {
 			console.error("Error posting data:", error);
 		}
