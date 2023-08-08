@@ -17,19 +17,35 @@ export default function patientDetail() {
 	}, [router.query.id]);
 
 	return (
-		<div className="flex w-full flex-col  justify-center">
+		<div className="flex w-full flex-col items-center">
 			<Navbar searchInput={searchInput} onSearchInputChange={setSearchInput} />
-			<div className="mt-20 w-full  flex flex-col justify-center ">
-				{console.log(data)}
-				<h1 className="text-2xl ">Details Page</h1>
-				<div className="w-1/4 border-red-400 border-2">
-					<p>User Id : {data.userId}</p>
-					<p>Full Name : {data.fullName}</p>
-					<p>Age : {data.age}</p>
-					<p>Phone Number : {data.phoneNumber}</p>
-					<p>Sex : {data.sex}</p>
-					<p>Passport Number : {data.passportNumber}</p>
-					<p>Nationality : {data.nationality}</p>
+			<div className="w-full max-w-md p-6 mx-auto mt-10 bg-white rounded-lg shadow-md">
+				<h1 className="text-2xl font-semibold text-center">User Details</h1>
+				<div className="mt-4 space-y-2">
+					<div className="flex justify-between">
+						<p className="text-gray-600 font-medium">User Id:</p>
+						<p>{data.userId}</p>
+					</div>
+					<div className="flex justify-between">
+						<p className="text-gray-600 font-medium">Full Name:</p>
+						<p>{data.fullName}</p>
+					</div>
+					<div className="flex justify-between">
+						<p className="text-gray-600 font-medium">Age:</p>
+						<p>{data.age}</p>
+					</div>
+					<div className="flex justify-between">
+						<p className="text-gray-600 font-medium">Sex:</p>
+						<p>{data.sex}</p>
+					</div>
+					<div className="flex justify-between">
+						<p className="text-gray-600 font-medium">Passport Number:</p>
+						<p>{data.passportNumber}</p>
+					</div>
+					<div className="flex justify-between">
+						<p className="text-gray-600 font-medium">Nationality:</p>
+						<p>{data.nationality}</p>
+					</div>
 				</div>
 			</div>
 		</div>

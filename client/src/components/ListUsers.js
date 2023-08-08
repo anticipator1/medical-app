@@ -3,34 +3,20 @@ import Link from "next/link";
 
 export default function ListUsers({ filteredPatients }) {
 	return (
-		<div className="w-full border-2 border-blue-300 mt-14">
-			<div className="flex justify-between m-4 p-2 border-blue-100 border-2">
-				<h1 className="w-1/6 text-xl font-serif font-bold">Test ID</h1>
-				<h1 className="w-1/4 text-xl font-serif font-bold">Full Name</h1>
-				<h1 className="w-1/4 text-xl font-serif font-bold">Sex</h1>
-				<h1 className="w-1/4 text-xl font-serif font-bold">Age</h1>
-				<h1 className="w-24 text-xl font-serif font-bold"></h1>
+		<div className="w-full bg-white border border-blue-300 mt-14 rounded-lg shadow-lg">
+			<div className="flex justify-between p-4 bg-indigo-100 border-b border-blue-200">
+				<h1 className="w-1/6 text-lg font-semibold">Test ID</h1>
+				<h1 className="w-1/4 text-lg font-semibold">Full Name</h1>
+				<h1 className="w-1/4 text-lg font-semibold">Sex</h1>
+				<h1 className="w-1/4 text-lg font-semibold">Age</h1>
+				<h1 className="w-24 text-lg font-semibold"></h1>
 			</div>
-			{/* {patients.length > 0 ? (
-					patients.map((item) => (
-						<div
-							key={item._id}
-							className="flex flex-row justify-between m-4 p-2 border-blue-100 border-b-2 text-lg"
-						>
-							<p className="w-1/6">{item.userId}</p>
-							<p className="w-1/4">{item.fullName}</p>
-							<p className="w-1/4">{item.sex}</p>
-							<p className="w-1/4">{item.age}</p>
-						</div>
-					))
-				) : (
-					<p>Loading....</p>
-				)} */}
+
 			{filteredPatients.length > 0 ? (
 				filteredPatients.map((item) => (
 					<div
 						key={item._id}
-						className="flex flex-row justify-between m-4 p-2 border-blue-100 border-b-2 text-lg"
+						className="flex items-center justify-between p-4 border-b border-blue-100 text-lg hover:bg-blue-50"
 					>
 						<p className="w-1/6">{item.userId}</p>
 						<Link
@@ -43,15 +29,14 @@ export default function ListUsers({ filteredPatients }) {
 						<p className="w-1/4">{item.age}</p>
 						<Link
 							href="/medical/detail"
-							className="text-indigo-600 underline w-24
-							"
+							className="text-indigo-600 underline w-24"
 						>
-							<p className=" text-xl font-serif font-bold">details</p>
+							<p className="text-lg font-semibold">Details</p>
 						</Link>
 					</div>
 				))
 			) : (
-				<p>Loading....</p>
+				<p className="p-4 text-center">Loading....</p>
 			)}
 		</div>
 	);
