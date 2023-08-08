@@ -1,9 +1,10 @@
 const express = require("express");
-const { addData, getPatients } = require("../controllers/patient");
+const { addData, getPatients, getPatient } = require("../controllers/patient");
 const router = express.Router();
 
 router.post("/patient/addData", addData);
 router.get("/patients", getPatients);
+router.get("/patient/:id", getPatient);
 
 // router.get("/users", getAllUser);
 

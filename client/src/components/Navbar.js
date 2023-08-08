@@ -209,14 +209,16 @@ export default function PrimarySearchAppBar({
 							</ListItem>
 						</List>
 					</Drawer>
-					<Typography
-						variant="h6"
-						noWrap
-						component="div"
-						sx={{ display: { xs: "none", sm: "block" } }}
-					>
-						Medical-app
-					</Typography>
+					<Link href="/">
+						<Typography
+							variant="h6"
+							noWrap
+							component="div"
+							sx={{ display: { xs: "none", sm: "block" } }}
+						>
+							Medical-app
+						</Typography>
+					</Link>
 					<Search>
 						<SearchIconWrapper>
 							<SearchIcon />
@@ -230,7 +232,7 @@ export default function PrimarySearchAppBar({
 					</Search>
 					<Link
 						href="/medical/addData"
-						className="flex bg-indigo-600 p-2 hover:bg-indigo-400"
+						className="flex bg-indigo-600 p-2 hover:bg-indigo-400 active:bg-indigo-600 rounded-md"
 					>
 						<p>Create New</p>
 						<AddIcon />

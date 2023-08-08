@@ -1,7 +1,9 @@
 import React from "react";
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import Navbar from "../../components/Navbar";
 
 const SignupSchema = Yup.object().shape({
 	fullName: Yup.string()
@@ -28,6 +30,8 @@ const SignupSchema = Yup.object().shape({
 });
 
 export default function addData() {
+	const [searchInput, setSearchInput] = useState("");
+
 	const router = useRouter();
 
 	const addUserData = async (values) => {
@@ -51,7 +55,11 @@ export default function addData() {
 	return (
 		<div className="flex w-5/6 justify-center  m-auto mt-4">
 			<div className="flex flex-col w-full sm:w-3/4 md:w-3/4 lg:w-96  justify-center ">
-				<h1 className="font-bold text-xl mt-10   md:text-2xl text-center">
+				<Navbar
+					searchInput={searchInput}
+					onSearchInputChange={setSearchInput}
+				/>
+				<h1 className="font-bold text-xl mt-12   md:text-2xl text-center">
 					add user data
 				</h1>
 
@@ -71,10 +79,10 @@ export default function addData() {
 					}}
 				>
 					{({ errors, touched }) => (
-						<Form className="w-full flex flex-col justify-center mx-auto mt-10">
+						<Form className="w-full flex flex-col justify-center mx-auto mt-5">
 							<label
 								htmlFor="fullName"
-								className="block text-sm font-medium leading-6 text-gray-900"
+								className="block text-sm font-medium leading-6 text-gray-900 "
 							>
 								full name
 							</label>
@@ -88,7 +96,7 @@ export default function addData() {
 							) : null}
 							<label
 								htmlFor="phoneNumber"
-								className="block text-sm font-medium leading-6 text-gray-900"
+								className="block text-sm font-medium leading-6 text-gray-900 mt-2"
 							>
 								Phone Number
 							</label>
@@ -102,7 +110,7 @@ export default function addData() {
 							) : null}
 							<label
 								htmlFor="age"
-								className="block text-sm font-medium leading-6 text-gray-900 mt-5"
+								className="block text-sm font-medium leading-6 text-gray-900 mt-2"
 							>
 								Age
 							</label>
@@ -117,7 +125,7 @@ export default function addData() {
 
 							<label
 								htmlFor="nationality"
-								className="block text-sm font-medium leading-6 text-gray-900"
+								className="block text-sm font-medium leading-6 text-gray-900 mt-2"
 							>
 								Nationality
 							</label>
@@ -132,7 +140,7 @@ export default function addData() {
 
 							<label
 								htmlFor="passportNumber"
-								className="block text-sm font-medium leading-6 text-gray-900"
+								className="block text-sm font-medium leading-6 text-gray-900 mt-2"
 							>
 								Passport Number
 							</label>
@@ -146,7 +154,7 @@ export default function addData() {
 							) : null}
 							<label
 								htmlFor="sex"
-								className="block text-sm font-medium leading-6 text-gray-900"
+								className="block text-sm font-medium leading-6 text-gray-900 mt-2"
 							>
 								Sex
 							</label>
@@ -161,7 +169,7 @@ export default function addData() {
 
 							<button
 								type="submit"
-								className="flex mt-3 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+								className="flex mt-3 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 active:bg-indigo-600"
 							>
 								Submit
 							</button>
