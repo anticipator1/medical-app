@@ -1,7 +1,9 @@
 import React from "react";
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import { UseSelector } from "react-redux/es/hooks/useSelector";
 
 const SignupSchema = Yup.object().shape({
 	phoneNumber: Yup.string()
@@ -16,6 +18,7 @@ const SignupSchema = Yup.object().shape({
 
 export default function Login() {
 	const router = useRouter();
+	const [error, setError] = useState("");
 	const loginAdmin = async (values) => {
 		try {
 			const response = await fetch("http://localhost:3005/admin/login", {
@@ -28,8 +31,10 @@ export default function Login() {
 			const result = await response.json();
 
 			console.log("Post response:", result);
-			if (result) {
+			if (result.msg == "success") {
 				router.push("/");
+			} else {
+				setError(result.msg);
 			}
 		} catch (error) {
 			console.error("Error posting data:", error);

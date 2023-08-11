@@ -25,16 +25,23 @@ const registerUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-	const user = await User.findOne({ phoneNumber: req.body.phoneNumber });
+	const userData = await User.findOne({
+		phoneNumber: req.body.phoneNumber,
+	}).lean();
 
-	if (user) {
-		const isMatched = await bcrypt.compare(req.body.password, user.password);
+	if (userData) {
+		const isMatched = await bcrypt.compare(
+			req.body.password,
+			userData.password
+		);
 		if (isMatched) {
+			const { password, ...userDetails } = userData;
 			const secretKey = crypto.randomBytes(32).toString("hex");
-			const token = jwt.sign({ id: user._id }, secretKey);
+			const token = jwt.sign({ id: userData._id }, secretKey);
 			res.json({
 				success: true,
 				token,
+				userDetails,
 			});
 		} else {
 			res.json({

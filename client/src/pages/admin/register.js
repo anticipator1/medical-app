@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
@@ -28,6 +29,7 @@ const SignupSchema = Yup.object().shape({
 
 export default function Register() {
 	const router = useRouter();
+	const [error, setError] = useState("");
 	const registerUser = async (values) => {
 		try {
 			const response = await fetch("http://localhost:3005/admin/register", {
@@ -38,8 +40,10 @@ export default function Register() {
 				body: JSON.stringify(values),
 			});
 			const result = await response.json();
-			if (result) {
+			if (result.msg == "success") {
 				router.push("/admin/login");
+			} else {
+				setError(result.msg);
 			}
 			console.log("Post response:", result);
 		} catch (error) {

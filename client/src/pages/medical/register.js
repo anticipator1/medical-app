@@ -41,7 +41,7 @@ export default function Register() {
 			const result = await response.json();
 			console.log("Post response:", result);
 			if (result.msg == "success") {
-				router.push("/");
+				router.push("/medical/login");
 			} else {
 				setError(result.msg);
 			}
