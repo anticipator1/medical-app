@@ -3,7 +3,8 @@ import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
-import ListUsers from "@/components/ListUsers";
+import ListUsers from "@/components/ListUsers.js";
+import { handleLogout } from "@/redux/reducerSlices/userSlice";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -31,6 +32,7 @@ export default function Dashboard() {
 	const [patients, setPatients] = useState([]);
 	const [searchInput, setSearchInput] = useState("");
 	const { isLoggedIn } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
 
 	const fetchPatients = async () => {
 		const response = await fetch("http://localhost:3005/patients");
@@ -54,6 +56,9 @@ export default function Dashboard() {
 	return (
 		<div className="flex w-full flex-col  justify-center">
 			<Navbar searchInput={searchInput} onSearchInputChange={setSearchInput} />
+			{/* <button className="mt-20" onClick={() => dispatch(handleLogout())}>
+				sign out
+			</button> */}
 			<ListUsers filteredPatients={filteredPatients} />
 		</div>
 	);

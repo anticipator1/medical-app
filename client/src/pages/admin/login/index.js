@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import { UseSelector } from "react-redux/es/hooks/useSelector";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignupSchema = Yup.object().shape({
 	phoneNumber: Yup.string()

@@ -26,6 +26,10 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import ListItemButton from "@mui/material/ListItemButton";
 import HomeIcon from "@mui/icons-material/Home";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { handleLogout } from "@/redux/reducerSlices/userSlice";
+import LogoutIcon from "@mui/icons-material/Logout";
+
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
 	borderRadius: theme.shape.borderRadius,
@@ -70,6 +74,7 @@ export default function PrimarySearchAppBar({
 	searchInput,
 	onSearchInputChange,
 }) {
+	const dispatch = useDispatch();
 	const [anchorEl, setAnchorEl] = useState(null);
 	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 
@@ -116,7 +121,7 @@ export default function PrimarySearchAppBar({
 			onClose={handleMenuClose}
 		>
 			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-			<MenuItem onClick={handleMenuClose}>My account</MenuItem>
+			<MenuItem onClick={() => dispatch(handleLogout())}>Sign Out</MenuItem>
 		</Menu>
 	);
 
@@ -161,13 +166,14 @@ export default function PrimarySearchAppBar({
 				<IconButton
 					size="large"
 					aria-label="account of current user"
-					aria-controls="primary-search-account-menu"
+					//aria-controls="primary-search-account-menu"
+					aria-controls={menuId}
 					aria-haspopup="true"
 					color="inherit"
 				>
 					<AccountCircle />
 				</IconButton>
-				<p>Profile</p>
+				<p>sign in</p>
 			</MenuItem>
 		</Menu>
 	);
@@ -187,25 +193,36 @@ export default function PrimarySearchAppBar({
 						<MenuIcon />
 					</IconButton>
 					<Drawer anchor="left" open={openDrawer} onClose={toggleDrawer}>
-						<List className=" w-34 md:p-4 md:w-48 ">
-							<ListItem>
-								<Link
-									href="/"
-									className="flex align-center justify-between  w-50"
-								>
-									<ListItemText primary="Home" className=" md:w-20 w-14" />
-									<ListItemIcon>
+						<List className=" w-40 md:p-4 md:w-48 ">
+							<ListItem className="hover:bg-gray-200">
+								<Link href="/" className="flex align-center justify-between  ">
+									<ListItemText primary="Home" className=" md:w-20 w-20 p-2" />
+									<ListItemIcon className="p-2">
 										<HomeIcon />
 									</ListItemIcon>
 								</Link>
 							</ListItem>
-							<ListItem true>
-								<Link href="/admin/register" className="flex align-center">
-									<ListItemText primary="Setting" className="md:w-20 w-14" />
-									<ListItemIcon>
+							<ListItem true className="hover:bg-gray-200">
+								<Link href="/admin/register" className="flex align-center ">
+									<ListItemText
+										primary="Setting"
+										className="md:w-20 w-20 p-2"
+									/>
+									<ListItemIcon className="p-2">
 										<SettingsIcon />
 									</ListItemIcon>
 								</Link>
+							</ListItem>
+							<ListItem true className="hover:bg-gray-200">
+								<button
+									className="flex align-center ml-0 "
+									onClick={() => dispatch(handleLogout())}
+								>
+									<ListItemText primary="Log Out" className="md:w-20 w-20" />
+									<ListItemIcon className="p-1 ml-1">
+										<LogoutIcon />
+									</ListItemIcon>
+								</button>
 							</ListItem>
 						</List>
 					</Drawer>
@@ -274,9 +291,11 @@ export default function PrimarySearchAppBar({
 						<IconButton
 							size="large"
 							aria-label="show more"
-							aria-controls={mobileMenuId}
+							//aria-controls={mobileMenuId}
+							aria-controls={menuId}
 							aria-haspopup="true"
-							onClick={handleMobileMenuOpen}
+							//onClick={handleMobileMenuOpen}
+							onClick={handleProfileMenuOpen}
 							color="inherit"
 						>
 							<MoreIcon />
