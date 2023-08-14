@@ -24,7 +24,7 @@ const style = {
 	top: "50%",
 	left: "50%",
 	p: 4,
-	width: 400,
+
 	overflow: "scroll",
 	transform: "translate(-50%, -50%)",
 	height: "100%",
@@ -35,10 +35,10 @@ const style = {
 	p: 4,
 };
 
-export default function BasicModal(props) {
+export default function EditPatientModal(props) {
 	// const handleOpen = () => props.setOpen(true);
 	// const handleClose = () => setOpen(false);
-	console.log(props.open);
+
 	return (
 		<div>
 			<Button
@@ -47,7 +47,7 @@ export default function BasicModal(props) {
 				onClick={() => props.setOpen(true)}
 			>
 				<EditIcon />
-				<p className="p-1">Edit Profile</p>
+				<p className="p-1">Edit Details</p>
 			</Button>
 			<Modal
 				open={props.open}
@@ -59,15 +59,17 @@ export default function BasicModal(props) {
 					<div className="flex w-5/6 justify-center  m-auto ">
 						<div className="flex flex-col w-full sm:w-3/4 md:w-3/4 lg:w-96  justify-center ">
 							<h1 className="font-bold text-xl    md:text-2xl text-center">
-								Edit Your profile
+								Edit Details
 							</h1>
 
 							<Formik
 								initialValues={{
-									phoneNumber: "",
-									firstName: "",
-									lastName: "",
-									email: "",
+									userId: props.data.userId,
+									fullName: props.data.fullName,
+									age: props.data.age,
+									sex: props.data.sex,
+									passportNumber: props.data.passportNumber,
+									nationality: props.data.nationality,
 								}}
 								//validationSchema={SignupSchema}
 								onSubmit={(values) => {
@@ -78,72 +80,80 @@ export default function BasicModal(props) {
 								{({ errors, touched }) => (
 									<Form className="w-full flex flex-col justify-center mx-auto mt-10">
 										<label
-											htmlFor="phoneNumber"
+											htmlFor="userId"
 											className="block text-sm font-medium leading-6 text-gray-900"
 										>
-											Phone Number
+											User Id
 										</label>
 										<Field
-											name="phoneNumber"
+											disabled
+											name="userId"
 											type="text"
-											value={props.userDetails.phoneNumber}
 											className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
 										/>
 
 										<label
-											htmlFor="firstName"
-											className="block text-sm font-medium leading-6 text-gray-900 mt-5"
+											htmlFor="fullName"
+											className="block text-sm font-medium leading-6 text-gray-900"
 										>
-											First Name
+											Full Name
 										</label>
 										<Field
-											name="firstName"
+											name="fullName"
 											type="text"
-											value={props.userDetails.firstName}
-											className="block mt-2  w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
+											className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
 										/>
+
 										<label
-											htmlFor="firstName"
+											htmlFor="age"
 											className="block text-sm font-medium leading-6 text-gray-900 mt-5"
 										>
-											Last Name
+											Age
 										</label>
 										<Field
-											name="lasttName"
+											name="age"
 											type="text"
-											value={props.userDetails.lastName}
 											className="block mt-2  w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
 										/>
 										<label
-											htmlFor="email"
-											className="block text-sm font-medium leading-6 text-gray-900 mt-5"
+											htmlFor="sex"
+											className="block text-sm font-medium leading-6 text-gray-900"
 										>
-											Email
+											Sex
 										</label>
 										<Field
-											name="email"
-											type="email"
-											value={props.userDetails.email}
-											className="block mt-2  w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
+											name="sex"
+											type="text"
+											className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
 										/>
 										<label
-											htmlFor="email"
-											className="block text-sm font-medium leading-6 text-gray-900 mt-5"
+											htmlFor="passportNumber"
+											className="block text-sm font-medium leading-6 text-gray-900"
 										>
-											Email
+											Passport Number
 										</label>
 										<Field
-											name="email"
-											type="email"
-											value={props.userDetails.email}
-											className="block mt-2  w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
+											name="passportNumber"
+											type="text"
+											className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
+										/>
+										<label
+											htmlFor="nationality"
+											className="block text-sm font-medium leading-6 text-gray-900"
+										>
+											Nationality
+										</label>
+										<Field
+											name="nationality"
+											type="text"
+											className="block mt-2 w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
 										/>
 
 										<button
 											type="submit"
-											className="flex mt-3 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 active:bg-indigo-700"
+											className="flex mt-3 w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 active:bg-indigo-700"
 										>
-											Submit
+											Edit
 										</button>
 									</Form>
 								)}

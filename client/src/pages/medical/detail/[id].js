@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
+import EditPatientModal from "@/components/EditPatientModal";
+
 export default function patientDetail() {
 	const router = useRouter();
+	const [open, setOpen] = React.useState(false);
 	const [data, setData] = useState([]);
 	const [searchInput, setSearchInput] = useState("");
 	const userDetail = async () => {
@@ -46,6 +49,7 @@ export default function patientDetail() {
 						<p className="text-gray-600 font-medium">Nationality:</p>
 						<p>{data.nationality}</p>
 					</div>
+					<EditPatientModal open={open} setOpen={setOpen} data={data} />
 				</div>
 			</div>
 		</div>

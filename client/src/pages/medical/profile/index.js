@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import BasicModal from "@/components/Modal";
+import EditUserModal from "@/components/EditUserModal";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "@/components/Navbar";
 import Login from "../login";
@@ -21,7 +21,11 @@ function Profile() {
 			//
 			<Navbar searchInput={searchInput} onSearchInputChange={setSearchInput} />
 			<div className="mt-20">
-				<BasicModal open={open} setOpen={setOpen} userDetails={userDetails} />
+				<EditUserModal
+					open={open}
+					setOpen={setOpen}
+					userDetails={userDetails}
+				/>
 			</div>
 		</div>
 	);
