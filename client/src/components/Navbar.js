@@ -120,7 +120,9 @@ export default function PrimarySearchAppBar({
 			open={isMenuOpen}
 			onClose={handleMenuClose}
 		>
-			<MenuItem onClick={handleMenuClose}>Profile</MenuItem>
+			<MenuItem>
+				<Link href="/medical/profile">Profile</Link>
+			</MenuItem>
 			<MenuItem onClick={() => dispatch(handleLogout())}>Sign Out</MenuItem>
 		</Menu>
 	);
