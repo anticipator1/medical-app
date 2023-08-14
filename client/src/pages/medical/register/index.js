@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const SignupSchema = Yup.object().shape({
 	firstName: Yup.string()
@@ -28,7 +30,7 @@ const SignupSchema = Yup.object().shape({
 
 export default function Register() {
 	const router = useRouter();
-	const [error, setError] = useState("");
+	const [error, setError] = useState({ errorMsg: "", type: "" });
 	const registerUser = async (values) => {
 		try {
 			const response = await fetch("http://localhost:3005/user/register", {
@@ -40,10 +42,13 @@ export default function Register() {
 			});
 			const result = await response.json();
 			console.log("Post response:", result);
-			if (result.msg == "success") {
-				router.push("/medical/login");
+			if (response.status == 409) {
+				setError({ errorMsg: result.msg, type: "error" });
 			} else {
-				setError(result.msg);
+				setError({ errorMsg: result.msg, type: "success" });
+				setTimeout(() => {
+					router.push("/medical/login");
+				}, 1000);
 			}
 		} catch (error) {
 			console.error("Error posting data:", error);
@@ -75,6 +80,19 @@ export default function Register() {
 				>
 					{({ errors, touched }) => (
 						<Form className="w-full flex flex-col justify-center mx-auto mt-10">
+							{error.errorMsg ? (
+								<Alert
+									onClose={() => {
+										setError("");
+									}}
+									severity={error.type}
+								>
+									<AlertTitle>Error</AlertTitle>
+									{error.errorMsg}
+								</Alert>
+							) : (
+								""
+							)}
 							<div className="flex  sm:flex-row flex-col  align-center ">
 								<div className="w-full sm:w-1/2">
 									<label
@@ -120,7 +138,7 @@ export default function Register() {
 							{errors.phoneNumber && touched.phoneNumber ? (
 								<div className="text-red-500">{errors.phoneNumber}</div>
 							) : null}
-							{error ? <div className="text-red-500">{error}</div> : null}
+
 							<label
 								htmlFor="email"
 								className="block text-sm font-medium leading-6 text-gray-900 mt-5"

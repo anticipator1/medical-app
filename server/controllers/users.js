@@ -8,14 +8,14 @@ const registerUser = async (req, res) => {
 		const matched = await User.exists({ phoneNumber: req.body.phoneNumber });
 		if (matched) {
 			res.status(409).json({
-				msg: "User already exist",
+				msg: "Phone number already exist",
 			});
 		} else {
 			const hashedPassword = await bcrypt.hash(req.body.password, 10);
 			req.body.password = hashedPassword;
 			const data = await User.create(req.body);
 			res.json({
-				msg: "success",
+				msg: "Login successful",
 				data,
 			});
 		}

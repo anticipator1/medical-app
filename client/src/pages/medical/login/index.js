@@ -22,6 +22,11 @@ export default function Login() {
 	const { isLoggedIn } = useSelector((state) => state.user);
 	const router = useRouter();
 	const [error, setError] = useState("");
+
+	if (isLoggedIn) {
+		router.push("/");
+	}
+
 	const loginUser = async (values) => {
 		try {
 			const response = await fetch("http://localhost:3005/user/login", {
@@ -34,10 +39,7 @@ export default function Login() {
 			const result = await response.json();
 
 			console.log("Post response:", result);
-			dispatch(setUserDetails(result));
-			if (isLoggedIn) {
-				router.push("/");
-			}
+			await dispatch(setUserDetails(result));
 		} catch (error) {
 			console.error("Error posting data:", error);
 		}

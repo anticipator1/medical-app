@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
-import Navbar from "../../components/Navbar";
+import Navbar from "../../../components/Navbar";
 import { useSelector } from "react-redux";
 
 const SignupSchema = Yup.object().shape({

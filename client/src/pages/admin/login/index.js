@@ -31,11 +31,6 @@ export default function Login() {
 			const result = await response.json();
 
 			console.log("Post response:", result);
-			if (result.msg == "success") {
-				router.push("/");
-			} else {
-				setError(result.msg);
-			}
 		} catch (error) {
 			console.error("Error posting data:", error);
 		}
