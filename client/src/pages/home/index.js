@@ -34,6 +34,10 @@ export default function Dashboard() {
 	const { isLoggedIn } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
+	if (!isLoggedIn) {
+		router.replace("/medical/login");
+	}
+
 	const fetchPatients = async () => {
 		const response = await fetch("http://localhost:3005/patients");
 		const data = await response.json();

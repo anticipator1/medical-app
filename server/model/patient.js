@@ -10,9 +10,9 @@ const patientSchema = new mongoose.Schema({
 	sex: String,
 
 	//2nd form input
-	height: Number,
-	weight: Number,
-	temperature: Number,
+	height: String,
+	weight: String,
+	temperature: String,
 	jaundice: String,
 	hernia: String,
 	cardioVascular: String,

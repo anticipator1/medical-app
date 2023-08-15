@@ -46,8 +46,34 @@ const getPatient = async (req, res) => {
 	}
 };
 
+const editPatient = async (req, res) => {
+	const newData = req.body;
+	try {
+		const dataExist = await Patient.exists({ _id: req.params.id });
+		if (dataExist) {
+			const updatedData = await Patient.findByIdAndUpdate(
+				req.params.id, // Replace with the specific document ID
+				{ $set: newData }, // Use $set to update existing fields or append new fields
+				{ new: true }
+			);
+
+			res.json({
+				msg: "success",
+				updatedData,
+			});
+		} else {
+			res.json({
+				msg: "no user exist",
+			});
+		}
+	} catch (error) {
+		console.log(error);
+	}
+};
+
 module.exports = {
 	addData,
 	getPatients,
 	getPatient,
+	editPatient,
 };

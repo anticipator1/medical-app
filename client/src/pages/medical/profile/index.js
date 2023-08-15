@@ -13,7 +13,7 @@ function Profile() {
 	const { userDetails, isLoggedIn } = useSelector((state) => state.user);
 
 	if (!isLoggedIn) {
-		router.push("/medical/login");
+		router.replace("/medical/login");
 	}
 
 	return (
