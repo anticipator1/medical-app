@@ -1,10 +1,11 @@
 import React from "react";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import Navbar from "../../../components/Navbar";
 import { useSelector } from "react-redux";
+import CustomWebcam from "../webcam";
 
 const SignupSchema = Yup.object().shape({
 	fullName: Yup.string()
@@ -34,18 +35,58 @@ export default function addData() {
 	const [searchInput, setSearchInput] = useState("");
 
 	const router = useRouter();
+	const webcamRef = useRef(null); // create a webcam reference
+	const [imgSrc, setImgSrc] = useState(null);
+	const [click, setClick] = useState(false);
+
+	const capture = useCallback(() => {
+		const imageSrc = webcamRef.current.getScreenshot();
+		setImgSrc(imageSrc);
+	}, [webcamRef]);
+
+	function dataURItoBlob(imgSrc) {
+		//console.log(imgSrc);
+		const byteString = atob(imgSrc.split(",")[1]);
+		const mimeString = imgSrc.split(",")[0].split(":")[1].split(";")[0];
+		const ab = new ArrayBuffer(byteString.length);
+		const ia = new Uint8Array(ab);
+		for (let i = 0; i < byteString.length; i++) {
+			ia[i] = byteString.charCodeAt(i);
+		}
+		return new Blob([ab], { type: mimeString });
+	}
 
 	const addUserData = async (values) => {
 		try {
-			const response = await fetch("http://localhost:3005/patient/addData", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(values),
-			});
+			const uniquePhotoName =
+				Date.now() + "-" + Math.round(Math.random() * 1e9);
+			const formData = new FormData();
+			formData.append(
+				"image",
+				dataURItoBlob(imgSrc),
+				uniquePhotoName + ".jpeg"
+			);
+			formData.append("fullName", values.fullName);
+			formData.append("phoneNumber", values.phoneNumber);
+			formData.append("age", values.age);
+			formData.append("nationality", values.nationality);
+			formData.append("passportNumber", values.passportNumber);
+			formData.append("sex", values.sex);
+
+			//console.log(imgSrc);
+
+			const response = await fetch(
+				"http://localhost:3005/patient/addData",
+
+				{
+					method: "POST",
+
+					body: formData,
+					//body: JSON.stringify(values),
+				}
+			);
 			const result = await response.json();
-			console.log("Post response:", result);
+			console.log("Post response:", result.data);
 			if (result) {
 				router.push("/");
 			}
@@ -76,11 +117,23 @@ export default function addData() {
 					validationSchema={SignupSchema}
 					onSubmit={(values) => {
 						// same shape as initial values
+
 						addUserData(values);
 					}}
 				>
 					{({ errors, touched }) => (
-						<Form className="w-full flex flex-col justify-center mx-auto mt-5">
+						<Form
+							encType="multipart/form-data"
+							className="w-full flex flex-col justify-center mx-auto mt-5"
+						>
+							<CustomWebcam
+								webcamRef={webcamRef}
+								imgSrc={imgSrc}
+								setImgSrc={setImgSrc}
+								capture={capture}
+								click={click}
+								setClick={setClick}
+							/>
 							<label
 								htmlFor="fullName"
 								className="block text-sm font-medium leading-6 text-gray-900 "

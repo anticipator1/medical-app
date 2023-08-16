@@ -1,11 +1,29 @@
 const Patient = require("../model/patient");
+
 const mongoose = require("mongoose");
+
 const addData = async (req, res) => {
 	try {
 		// const { fullName, phoneNumber, age, nationality, passportNumber, sex } =
 		// 	req.body;
+		const { fullName, phoneNumber, age, nationality, passportNumber, sex } =
+			req.body;
 
-		const patientData = await Patient.create(req.body);
+		let imagePath = null;
+
+		if (req.file) {
+			imagePath = req.file.path; // Store the image path if an image was uploaded
+			console.log(imagePath);
+		}
+
+		const patientData = await Patient.create({
+			fullName,
+			phoneNumber,
+			age,
+			nationality,
+			passportNumber,
+			sex,
+		});
 		res.json({
 			msg: "success",
 			patientData,

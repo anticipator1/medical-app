@@ -6,8 +6,9 @@ const patientSchema = new mongoose.Schema({
 	phoneNumber: Number,
 	age: Number,
 	nationality: String,
-	passportNumber: Number,
+	passportNumber: String,
 	sex: String,
+	patientImage: String,
 
 	//2nd form input
 	height: String,
