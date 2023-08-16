@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Navbar from "../../../components/Navbar";
 import { useSelector } from "react-redux";
 import CustomWebcam from "../webcam";
+import { current } from "@reduxjs/toolkit";
 
 const SignupSchema = Yup.object().shape({
 	fullName: Yup.string()
@@ -58,14 +59,20 @@ export default function addData() {
 
 	const addUserData = async (values) => {
 		try {
-			const uniquePhotoName =
-				Date.now() + "-" + Math.round(Math.random() * 1e9);
 			const formData = new FormData();
-			formData.append(
-				"image",
-				dataURItoBlob(imgSrc),
-				uniquePhotoName + ".jpeg"
-			);
+			if (values.image) {
+				formData.append("image", values.image);
+			} else {
+				const uniquePhotoName =
+					Date.now() + "-" + Math.round(Math.random() * 1e9);
+
+				formData.append(
+					"image",
+					dataURItoBlob(imgSrc),
+					uniquePhotoName + ".jpeg"
+				);
+			}
+
 			formData.append("fullName", values.fullName);
 			formData.append("phoneNumber", values.phoneNumber);
 			formData.append("age", values.age);
@@ -113,6 +120,7 @@ export default function addData() {
 						nationality: "",
 						passportNumber: "",
 						sex: "",
+						image: null,
 					}}
 					validationSchema={SignupSchema}
 					onSubmit={(values) => {
@@ -121,7 +129,7 @@ export default function addData() {
 						addUserData(values);
 					}}
 				>
-					{({ errors, touched }) => (
+					{({ errors, touched, setFieldValue }) => (
 						<Form
 							encType="multipart/form-data"
 							className="w-full flex flex-col justify-center mx-auto mt-5"
@@ -133,6 +141,19 @@ export default function addData() {
 								capture={capture}
 								click={click}
 								setClick={setClick}
+							/>
+							<label
+								htmlFor="image"
+								className="block text-sm font-medium leading-6 text-gray-900 "
+							>
+								upload file
+							</label>
+							<input
+								type="file"
+								name="image"
+								onChange={(event) => {
+									setFieldValue("image", event.currentTarget.files[0]);
+								}}
 							/>
 							<label
 								htmlFor="fullName"
