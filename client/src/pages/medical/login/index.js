@@ -5,6 +5,8 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import { setUserDetails } from "@/redux/reducerSlices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const SignupSchema = Yup.object().shape({
 	phoneNumber: Yup.string()
@@ -22,6 +24,11 @@ export default function Login() {
 	const { isLoggedIn } = useSelector((state) => state.user);
 	const router = useRouter();
 	const [error, setError] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
+
+	const toggleVisibility = () => {
+		setShowPassword(!showPassword);
+	};
 
 	if (isLoggedIn) {
 		router.push("/");
@@ -84,11 +91,17 @@ export default function Login() {
 							>
 								Password
 							</label>
-							<Field
-								name="password"
-								type="password"
-								className="block mt-2  w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
-							/>
+							<div className="flex">
+								<Field
+									name="password"
+									type={showPassword ? "text" : "password"}
+									className="block mt-2  w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6 focus:outline-none"
+								/>
+								<button onClick={toggleVisibility}>
+									{showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
+								</button>
+							</div>
+
 							{errors.password && touched.password ? (
 								<div className="text-red-500">{errors.password}</div>
 							) : null}

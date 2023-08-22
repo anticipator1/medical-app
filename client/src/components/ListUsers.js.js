@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function ListUsers({ filteredPatients }) {
 	return (
@@ -19,6 +20,13 @@ export default function ListUsers({ filteredPatients }) {
 						className="flex items-center justify-between p-4 border-b border-blue-100 text-lg hover:bg-blue-50"
 					>
 						<p className="w-1/6">{item.userId}</p>
+						{/* <p className="w-1/6">
+							<Image
+								width={100}
+								height={100}
+								src={`http://localhost:3005/patient-image/${item._id}`}
+							/>
+						</p> */}
 						<Link
 							href={`/medical/detail/${item._id}`}
 							className="w-1/4 hover:text-indigo-600 hover:underline"

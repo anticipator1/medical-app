@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const userRoutes = require("../routes/users");
-const adminRoutes = require("../routes/admin");
-const patientRoutes = require("../routes/patient");
-const { connectDb } = require("../db/connection.js");
+const userRoutes = require("./routes/users");
+const adminRoutes = require("./routes/admin");
+const patientRoutes = require("./routes/patient");
+const { connectDb } = require("./db/connection.js");
 const cors = require("cors");
 
 const app = express();

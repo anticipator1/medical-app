@@ -5,8 +5,9 @@ import * as Yup from "yup";
 import { useRouter } from "next/navigation";
 import Navbar from "../../../components/Navbar";
 import { useSelector } from "react-redux";
-import CustomWebcam from "../webcam";
-import { current } from "@reduxjs/toolkit";
+//import CustomWebcam from "../webcam";
+import CustomWebcam from "@/components/WebCam";
+import dataURItoBlob from "@/utils/uriToBlob";
 
 const SignupSchema = Yup.object().shape({
 	fullName: Yup.string()
@@ -45,17 +46,17 @@ export default function addData() {
 		setImgSrc(imageSrc);
 	}, [webcamRef]);
 
-	function dataURItoBlob(imgSrc) {
-		//console.log(imgSrc);
-		const byteString = atob(imgSrc.split(",")[1]);
-		const mimeString = imgSrc.split(",")[0].split(":")[1].split(";")[0];
-		const ab = new ArrayBuffer(byteString.length);
-		const ia = new Uint8Array(ab);
-		for (let i = 0; i < byteString.length; i++) {
-			ia[i] = byteString.charCodeAt(i);
-		}
-		return new Blob([ab], { type: mimeString });
-	}
+	// function dataURItoBlob(imgSrc) {
+	// 	//console.log(imgSrc);
+	// 	const byteString = atob(imgSrc.split(",")[1]);
+	// 	const mimeString = imgSrc.split(",")[0].split(":")[1].split(";")[0];
+	// 	const ab = new ArrayBuffer(byteString.length);
+	// 	const ia = new Uint8Array(ab);
+	// 	for (let i = 0; i < byteString.length; i++) {
+	// 		ia[i] = byteString.charCodeAt(i);
+	// 	}
+	// 	return new Blob([ab], { type: mimeString });
+	// }
 
 	const addUserData = async (values) => {
 		try {
@@ -63,13 +64,14 @@ export default function addData() {
 			if (values.image) {
 				formData.append("image", values.image);
 			} else {
+				//formData.append("image", imgSrc);
 				const uniquePhotoName =
 					Date.now() + "-" + Math.round(Math.random() * 1e9);
 
 				formData.append(
 					"image",
-					dataURItoBlob(imgSrc),
-					uniquePhotoName + ".jpeg"
+					dataURItoBlob(imgSrc) //called function from utils folder
+					//uniquePhotoName + ".jpeg"
 				);
 			}
 

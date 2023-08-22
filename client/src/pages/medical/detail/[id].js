@@ -7,6 +7,8 @@ import { IconButton, Typography } from "@mui/material";
 import { Add, Remove } from "@mui/icons-material";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSelector, useDispatch } from "react-redux";
+import Image from "next/image";
+import Avatar from "@mui/material/Avatar";
 
 export default function patientDetail() {
 	const router = useRouter();
@@ -31,6 +33,7 @@ export default function patientDetail() {
 
 	useEffect(() => {
 		userDetail();
+		console.log(data);
 	}, [router.query.id]);
 
 	const editData = async (values) => {
@@ -58,17 +61,44 @@ export default function patientDetail() {
 			<Navbar searchInput={searchInput} onSearchInputChange={setSearchInput} />
 			<div className="w-full max-w-md p-6 mx-auto mt-14 bg-white rounded-lg shadow-md ">
 				<h1 className="text-2xl font-semibold text-center">User Details</h1>
+
 				<div className="mt-6 space-y-2">
 					{data && (
 						<>
+							{/* {console.log(JSON.stringify(data))} */}
+							{/* <Image
+								className="w-full h-48 object-contain"
+								src={`http://localhost:3005/patient-image/${data._id}`}
+								width={200}
+								height={100}
+								alt="image"
+							/> */}
+
+							{data._id ? (
+								<div className="flex justify-center ">
+									<Image
+										className="w-full h-48 object-contain"
+										src={`http://localhost:3005/patient-image/${data._id}`}
+										width={400}
+										height={400}
+										//quality={100}
+										alt="image"
+									/>
+								</div>
+							) : (
+								"not loaded"
+							)}
+
 							<div className="flex justify-between">
 								<p className="text-gray-600 font-medium">User Id:</p>
 								<p>{data.userId}</p>
 							</div>
+
 							<div className="flex justify-between">
 								<p className="text-gray-600 font-medium">Full Name:</p>
 								<p>{data.fullName}</p>
 							</div>
+
 							<div className="flex justify-between">
 								<p className="text-gray-600 font-medium">Age:</p>
 								<p>{data.age}</p>
