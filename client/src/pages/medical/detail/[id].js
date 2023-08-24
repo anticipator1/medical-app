@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import Navbar from "@/components/Navbar";
 import EditPatientModal from "@/components/EditPatientModal";
@@ -18,6 +18,8 @@ export default function patientDetail() {
 	const [searchInput, setSearchInput] = useState("");
 	const [loading, setLoading] = useState(false);
 	const { userDetails, isLoggedIn } = useSelector((state) => state.user);
+	const formRef = useRef(null);
+	const [isOpen, setIsOpen] = useState(false);
 
 	if (!isLoggedIn) {
 		router.replace("/medical/login");
@@ -54,6 +56,10 @@ export default function patientDetail() {
 		} catch (error) {
 			console.log(error);
 		}
+	};
+
+	const handleFormOpen = () => {
+		setIsOpen(!isOpen);
 	};
 
 	return (
@@ -117,7 +123,143 @@ export default function patientDetail() {
 							</div>
 						</>
 					)}
-					<EditPatientModal open={open} setOpen={setOpen} data={data} />
+					<div className="flex items-center gap-6 mt-2 border-t-2 py-2 max-w-xl">
+						<svg
+							className={`w-4 h-4 dark:text-black font-bold inline-block text-3xl hover:cursor-pointer ${
+								isOpen ? "" : "rotate-180"
+							} transition-transform duration-500 ease-in`}
+							aria-hidden="true"
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 14 8"
+							onClick={handleFormOpen}
+						>
+							<path
+								stroke="currentColor"
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth="2"
+								d="m1 1 5.326 5.7a.909.909 0 0 0 1.348 0L13 1"
+							/>
+						</svg>
+					</div>
+					<Formik
+						initialValues={{
+							height: data.height,
+							weight: data.weight,
+							temperature: data.temperature,
+							jaundice: data.jaundice,
+							hernia: data.hernia,
+							cardioVascular: data.cardioVascular,
+							// Add more fields here
+						}}
+						onSubmit={async (values, { setSubmitting }) => {
+							//setSubmitting(true); // Set isSubmitting to true before the API call
+							setLoading(true);
+							await editData(values);
+							setTimeout(() => {
+								setLoading(false);
+							}, 3000);
+						}}
+					>
+						{({ isSubmitting }) => (
+							<div
+								ref={formRef}
+								style={{
+									maxHeight: `${
+										isOpen ? `${formRef.current.scrollHeight}px` : "0px"
+									}`,
+								}}
+								className="overflow-hidden transition-all duration-700 ease-in-out"
+							>
+								<Form ref={formRef}>
+									<div className="mt-4">
+										<label className="block text-gray-600 font-medium">
+											Height:
+										</label>
+										<Field
+											type="text"
+											name="height"
+											className="mt-1 px-4 py-2 border rounded-md w-full"
+											placeholder="Enter height"
+										/>
+									</div>
+									<div className="mt-4">
+										<label className="block text-gray-600 font-medium">
+											Weight:
+										</label>
+										<Field
+											type="text"
+											name="weight"
+											className="mt-1 px-4 py-2 border rounded-md w-full"
+											placeholder="Enter weight"
+										/>
+									</div>
+									<div className="mt-4">
+										<label className="block text-gray-600 font-medium">
+											Temperature:
+										</label>
+										<Field
+											type="text"
+											name="temperature"
+											className="mt-1 px-4 py-2 border rounded-md w-full"
+											placeholder="Enter temperature"
+										/>
+									</div>
+									<div className="mt-4">
+										<label className="block text-gray-600 font-medium">
+											jaundice:
+										</label>
+										<Field
+											type="text"
+											name="jaundice"
+											className="mt-1 px-4 py-2 border rounded-md w-full"
+											placeholder="Enter jaundice"
+										/>
+									</div>
+									<div className="mt-4">
+										<label className="block text-gray-600 font-medium">
+											hernia:
+										</label>
+										<Field
+											type="text"
+											name="hernia"
+											className="mt-1 px-4 py-2 border rounded-md w-full"
+											placeholder="Enter hernia"
+										/>
+									</div>
+									<div className="mt-4">
+										<label className="block text-gray-600 font-medium">
+											cardioVascular:
+										</label>
+										<Field
+											type="text"
+											name="cardioVascular"
+											className="mt-1 px-4 py-2 border rounded-md w-full"
+											placeholder="Enter cardioVascular"
+										/>
+									</div>
+
+									<button
+										type="submit"
+										className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
+										disabled={isSubmitting}
+									>
+										{loading ? (
+											<div className="flex">
+												<p>Submitting..</p>
+												<CircularProgress color="success" size={25} />
+											</div>
+										) : (
+											"Submit"
+										)}
+									</button>
+								</Form>
+							</div>
+						)}
+					</Formik>
+
+					{/* <EditPatientModal open={open} setOpen={setOpen} data={data} />
 					<IconButton
 						className={`mt-4 rounded-md focus:outline-none ${
 							showLabForm
@@ -238,8 +380,8 @@ export default function patientDetail() {
 									</Form>
 								)}
 							</Formik>
-						</div>
-					)}
+						</div> */}
+					{/* )} */}
 				</div>
 			</div>
 		</div>
