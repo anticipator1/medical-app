@@ -110,6 +110,7 @@ const getPatientImageById = async (req, res) => {
 
 const editPatient = async (req, res) => {
 	const newData = req.body;
+
 	try {
 		const dataExist = await Patient.exists({ _id: req.params.id });
 		if (dataExist) {

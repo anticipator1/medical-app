@@ -74,6 +74,7 @@ export default function Dashboard() {
 			</button> */}
 			<ListUsers filteredPatients={filteredPatients} />
 			<Pagination
+				className="p-4"
 				onChange={handlePageChange}
 				count={pageCount}
 				variant="outlined"

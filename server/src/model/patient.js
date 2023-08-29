@@ -10,6 +10,11 @@ const patientSchema = new mongoose.Schema({
 	sex: String,
 	patientImage: String,
 	user: String,
+	status: {
+		type: String,
+		enum: ["fit", "unfit", "incomplete"],
+		default: "incomplete",
+	},
 
 	//2nd form input
 	height: String,

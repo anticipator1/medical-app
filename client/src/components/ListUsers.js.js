@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function ListUsers({ filteredPatients }) {
 	return (
-		<div className="w-full bg-white border border-blue-300 mt-14 rounded-lg shadow-lg">
+		<div className="w-full bg-white border border-blue-300 mt-14 rounded-lg shadow-lg h-[70dvh]">
 			<div className="flex justify-between p-4 bg-indigo-100 border-b border-blue-200">
 				<h1 className="w-1/6 text-lg font-semibold">Test ID</h1>
 				<h1 className="w-1/4 text-lg font-semibold">Full Name</h1>
