@@ -5,6 +5,9 @@ import {
 	MarkerF,
 	LoadScript,
 } from "@react-google-maps/api";
+import AuthUserProfile from "@/components/AuthUserProfile";
+import First from "@/components/First";
+import Second from "@/components/Second";
 
 // const { isLoaded, loadError } = useJsApiLoader({
 // 	googleMapsApiKey: "AIzaSyDLfjmFgDEt9_G2LXVyP61MZtVHE2M3H-0", // ,
@@ -30,12 +33,16 @@ function Setting() {
 	}, []);
 	return (
 		<div>
-			<LoadScript googleMapsApiKey="AIzaSyDLfjmFgDEt9_G2LXVyP61MZtVHE2M3H-0">
+			{/* <LoadScript googleMapsApiKey="AIzaSyDLfjmFgDEt9_G2LXVyP61MZtVHE2M3H-0">
 				<GoogleMap mapContainerStyle={containerStyle} center={center} zoom={10}>
-					{/* Child components, such as markers, info windows, etc. */}
+					
 					<MarkerF position={center} />
 				</GoogleMap>
-			</LoadScript>
+			</LoadScript> */}
+			<First />
+			<div className="mt-5"></div>
+			<Second />
+			<div className="mt-4 pt-4 h-20"></div>
 		</div>
 	);
 }
